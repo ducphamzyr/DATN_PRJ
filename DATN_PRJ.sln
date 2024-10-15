@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATN_API", "DATN_API\DATN_A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATN_MVC", "DATN_MVC\DATN_MVC.csproj", "{2E6CE1D6-1A54-4F20-AF90-04572AC84D45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDATA", "AppDATA\AppDATA.csproj", "{2212F72D-27C0-4BB6-9078-388E2ED618F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2E6CE1D6-1A54-4F20-AF90-04572AC84D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E6CE1D6-1A54-4F20-AF90-04572AC84D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E6CE1D6-1A54-4F20-AF90-04572AC84D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
