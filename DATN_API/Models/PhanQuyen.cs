@@ -11,6 +11,6 @@ namespace DATN_API.Models
         [StringLength(100, ErrorMessage = "Tên phân quyền không được dài quá 100 ký tự")]
         public string TenPhanQuyen { get; set; }
 
-        public virtual ICollection<TaiKhoan> TaiKhoans { get; set; }
+        public virtual ICollection<TaiKhoan> TaiKhoans { get; set; } //
     }
 }
