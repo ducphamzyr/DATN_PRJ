@@ -11,7 +11,6 @@ namespace DATN_API.Models
         [StringLength(100, ErrorMessage = "Tên thanh toán không được dài quá 100 ký tự")]
         public string TenThanhToan { get; set; }
 
-        [Required(ErrorMessage = "Nhà cung cấp là bắt buộc")]
         [StringLength(100, ErrorMessage = "Nhà cung cấp không được dài quá 100 ký tự")]
         public string NhaCungCap { get; set; }
 

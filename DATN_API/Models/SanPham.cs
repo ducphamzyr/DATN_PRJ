@@ -11,7 +11,6 @@ namespace DATN_API.Models
         [StringLength(255, ErrorMessage = "Tên sản phẩm không được dài quá 255 ký tự")]
         public string TenSanPham { get; set; }
 
-        [Required(ErrorMessage = "Mã nhãn hiệu là bắt buộc")]
         public long NhanHieuID { get; set; }
 
         [Required(ErrorMessage = "Ngày khởi tạo là bắt buộc")]

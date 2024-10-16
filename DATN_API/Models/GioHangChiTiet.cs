@@ -7,10 +7,7 @@ namespace DATN_API.Models
         [Key]
         public long GioHangChiTietID { get; set; }
 
-        [Required(ErrorMessage = "Mã giỏ hàng là bắt buộc")]
         public long GioHangID { get; set; }
-
-        [Required(ErrorMessage = "Mã sản phẩm là bắt buộc")]
         public long SanPhamID { get; set; }
 
         [Required(ErrorMessage = "Số lượng là bắt buộc")]

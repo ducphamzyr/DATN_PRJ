@@ -6,14 +6,9 @@ namespace DATN_API.Models
     {
         [Key]
         public long DonHangID { get; set; }
-
-        [Required(ErrorMessage = "Mã tài khoản là bắt buộc")]
         public long TaiKhoanID { get; set; }
 
-        [Required(ErrorMessage = "Mã nhân viên là bắt buộc")]
         public long NhanVienID { get; set; }
-
-        [Required(ErrorMessage = "Mã phương thức thanh toán là bắt buộc")]
         public long PhuongThucThanhToanID { get; set; }
 
         public string GhiChu { get; set; }

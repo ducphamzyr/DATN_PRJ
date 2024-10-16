@@ -1,5 +1,6 @@
 ﻿using DATN_API;
 using Microsoft.EntityFrameworkCore;
+using DATN_API.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

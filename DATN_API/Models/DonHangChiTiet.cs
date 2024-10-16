@@ -7,10 +7,8 @@ namespace DATN_API.Models
         [Key]
         public long DonHangChiTietID { get; set; }
 
-        [Required(ErrorMessage = "Mã sản phẩm là bắt buộc")]
         public long SanPhamID { get; set; }
 
-        [Required(ErrorMessage = "Mã đơn hàng là bắt buộc")]
         public long DonHangID { get; set; }
 
         public long? MaGiamGiaID { get; set; }
