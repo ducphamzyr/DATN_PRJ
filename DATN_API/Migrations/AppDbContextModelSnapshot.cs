@@ -24,37 +24,34 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.DonHang", b =>
                 {
-                    b.Property<int>("DonHangID")
+                    b.Property<long>("DonHangID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonHangID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("DonHangID"));
 
-                    b.Property<DateTime?>("CapNhatLanCuoi")
+                    b.Property<DateTime>("CapNhatLanCuoi")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DiaChiGiaoHang")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GhiChu")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayDatHang")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("NhanVienID")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.Property<long>("NhanVienID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("PhuongThucThanhToanID")
-                        .HasColumnType("int");
+                    b.Property<long>("PhuongThucThanhToanID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("TaiKhoanID")
-                        .HasColumnType("int");
+                    b.Property<long>("TaiKhoanID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TrangThai")
                         .IsRequired()
@@ -73,19 +70,18 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.DonHangChiTiet", b =>
                 {
-                    b.Property<int>("DonHangChiTietID")
+                    b.Property<long>("DonHangChiTietID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonHangChiTietID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("DonHangChiTietID"));
 
-                    b.Property<int>("DonHangID")
-                        .HasColumnType("int");
+                    b.Property<long>("DonHangID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("GhiChu")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GiaTri")
                         .HasColumnType("decimal(18,2)");
@@ -95,12 +91,12 @@ namespace DATN_API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("MaGiamGiaID")
+                    b.Property<long?>("MaGiamGiaID")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("SanPhamID")
-                        .HasColumnType("int");
+                    b.Property<long>("SanPhamID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
@@ -118,46 +114,40 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.GioHang", b =>
                 {
-                    b.Property<int>("GioHangID")
+                    b.Property<long>("GioHangID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GioHangID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GioHangID"));
 
                     b.Property<DateTime>("CapNhatLanCuoi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TaiKhoanID")
-                        .HasColumnType("int");
-
                     b.HasKey("GioHangID");
-
-                    b.HasIndex("TaiKhoanID")
-                        .IsUnique();
 
                     b.ToTable("GioHangs");
                 });
 
             modelBuilder.Entity("DATN_API.Models.GioHangChiTiet", b =>
                 {
-                    b.Property<int>("GioHangChiTietID")
+                    b.Property<long>("GioHangChiTietID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GioHangChiTietID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GioHangChiTietID"));
 
                     b.Property<string>("GhiChu")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GioHangID")
-                        .HasColumnType("int");
+                    b.Property<long>("GioHangID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("SanPhamID")
-                        .HasColumnType("int");
+                    b.Property<long>("SanPhamID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("int");
+                    b.Property<long>("SoLuong")
+                        .HasColumnType("bigint");
 
                     b.HasKey("GioHangChiTietID");
 
@@ -170,11 +160,11 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.KhachHang", b =>
                 {
-                    b.Property<int>("KhachHangID")
+                    b.Property<long>("KhachHangID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KhachHangID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("KhachHangID"));
 
                     b.Property<string>("DiaChi")
                         .IsRequired()
@@ -182,8 +172,7 @@ namespace DATN_API.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NgayTao")
                         .HasColumnType("datetime2");
@@ -204,11 +193,11 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.MaGiamGia", b =>
                 {
-                    b.Property<int>("MaGiamGiaID")
+                    b.Property<long>("MaGiamGiaID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaGiamGiaID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("MaGiamGiaID"));
 
                     b.Property<string>("DanhSachTaiKhoan")
                         .IsRequired()
@@ -221,8 +210,8 @@ namespace DATN_API.Migrations
 
                     b.Property<string>("MaApDung")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("NgayHetHan")
                         .HasColumnType("datetime2");
@@ -233,10 +222,6 @@ namespace DATN_API.Migrations
                     b.Property<int>("PhanTramGiam")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SanPhamID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<decimal>("SoTienToiDa")
                         .HasColumnType("decimal(18,2)");
 
@@ -245,27 +230,24 @@ namespace DATN_API.Migrations
 
                     b.Property<string>("TenMa")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("TrangThai")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
 
                     b.HasKey("MaGiamGiaID");
-
-                    b.HasIndex("SanPhamID");
 
                     b.ToTable("MaGiamGias");
                 });
 
             modelBuilder.Entity("DATN_API.Models.NhanHieu", b =>
                 {
-                    b.Property<int>("NhanHieuID")
+                    b.Property<long>("NhanHieuID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NhanHieuID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("NhanHieuID"));
 
                     b.Property<string>("TenNhanHieu")
                         .IsRequired()
@@ -284,11 +266,11 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.NhanVien", b =>
                 {
-                    b.Property<int>("NhanVienID")
+                    b.Property<long>("NhanVienID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NhanVienID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("NhanVienID"));
 
                     b.Property<string>("DiaChiThuongTru")
                         .IsRequired()
@@ -306,24 +288,23 @@ namespace DATN_API.Migrations
 
                     b.Property<string>("SoCCCD")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<string>("SoDienThoai")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TaiKhoanID")
-                        .HasColumnType("int");
+                    b.Property<long>("TaiKhoanID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TenNhanVien")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("TrangThai")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TrangThai")
+                        .HasColumnType("int");
 
                     b.HasKey("NhanVienID");
 
@@ -335,11 +316,11 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.PhanLoai", b =>
                 {
-                    b.Property<int>("PhanLoaiID")
+                    b.Property<long>("PhanLoaiID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhanLoaiID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PhanLoaiID"));
 
                     b.Property<string>("TenPhanLoai")
                         .IsRequired()
@@ -353,16 +334,16 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.PhanQuyen", b =>
                 {
-                    b.Property<int>("PhanQuyenID")
+                    b.Property<long>("PhanQuyenID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhanQuyenID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PhanQuyenID"));
 
                     b.Property<string>("TenPhanQuyen")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("PhanQuyenID");
 
@@ -371,11 +352,11 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.PhuongThucThanhToan", b =>
                 {
-                    b.Property<int>("PhuongThucThanhToanID")
+                    b.Property<long>("PhuongThucThanhToanID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhuongThucThanhToanID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PhuongThucThanhToanID"));
 
                     b.Property<string>("NhaCungCap")
                         .IsRequired()
@@ -394,29 +375,56 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.SanPham", b =>
                 {
-                    b.Property<int>("SanPhamID")
+                    b.Property<long>("SanPhamID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SanPhamID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SanPhamID"));
+
+                    b.Property<string>("BoNho")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("ConLai")
+                        .HasColumnType("int");
 
                     b.Property<string>("GhiChu")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("NgayPhatHanh")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("Gia")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("NhanHieuID")
-                        .HasColumnType("int");
+                    b.Property<string>("KheSim")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("PhanLoaiID")
-                        .HasColumnType("int");
+                    b.Property<string>("Mau")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NgayKhoiTao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("NhanHieuID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PhanLoaiID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Ram")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TenSanPham")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("TrangThai")
                         .IsRequired()
@@ -431,107 +439,60 @@ namespace DATN_API.Migrations
                     b.ToTable("SanPhams");
                 });
 
-            modelBuilder.Entity("DATN_API.Models.SanPhamChiTiet", b =>
-                {
-                    b.Property<int>("SanPhamChiTietID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SanPhamChiTietID"));
-
-                    b.Property<string>("BoNho")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ConLai")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Gia")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("KichSim")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mau")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("RAM")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SanPhamID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TenSanPham")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SanPhamChiTietID");
-
-                    b.HasIndex("SanPhamID");
-
-                    b.ToTable("SanPhamChiTiets");
-                });
-
             modelBuilder.Entity("DATN_API.Models.TaiKhoan", b =>
                 {
-                    b.Property<int>("TaiKhoanID")
+                    b.Property<long>("TaiKhoanID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaiKhoanID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TaiKhoanID"));
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GioHangID")
-                        .HasColumnType("int");
+                    b.Property<long>("GioHangID")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("GioHangID_1")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("KhachHangID")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.Property<long>("KhachHangID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("MatKhauHash")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleID")
-                        .HasColumnType("int");
+                    b.Property<long>("PhanQuyenID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TenDangNhap")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("TaiKhoanID");
 
+                    b.HasIndex("GioHangID")
+                        .IsUnique();
+
                     b.HasIndex("KhachHangID");
 
-                    b.HasIndex("RoleID");
+                    b.HasIndex("PhanQuyenID");
 
                     b.ToTable("TaiKhoans");
                 });
 
             modelBuilder.Entity("DATN_API.Models.ThongBao", b =>
                 {
-                    b.Property<int>("ThongBaoID")
+                    b.Property<long>("ThongBaoID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ThongBaoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ThongBaoID"));
 
                     b.Property<string>("GhiChu")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("HetHan")
+                    b.Property<DateTime>("HetHan")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("NgayTao")
@@ -541,13 +502,13 @@ namespace DATN_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TaiKhoanID")
-                        .HasColumnType("int");
+                    b.Property<long>("TaiKhoanID")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("TieuDe")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("ThongBaoID");
 
@@ -561,19 +522,19 @@ namespace DATN_API.Migrations
                     b.HasOne("DATN_API.Models.NhanVien", "NhanVien")
                         .WithMany("DonHangs")
                         .HasForeignKey("NhanVienID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.PhuongThucThanhToan", "PhuongThucThanhToan")
                         .WithMany("DonHangs")
                         .HasForeignKey("PhuongThucThanhToanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.TaiKhoan", "TaiKhoan")
                         .WithMany()
                         .HasForeignKey("TaiKhoanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("NhanVien");
@@ -588,19 +549,19 @@ namespace DATN_API.Migrations
                     b.HasOne("DATN_API.Models.DonHang", "DonHang")
                         .WithMany("DonHangChiTiets")
                         .HasForeignKey("DonHangID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.MaGiamGia", "MaGiamGia")
-                        .WithMany()
+                        .WithMany("DonHangChiTiets")
                         .HasForeignKey("MaGiamGiaID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.SanPham", "SanPham")
-                        .WithMany()
+                        .WithMany("DonHangChiTiets")
                         .HasForeignKey("SanPhamID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DonHang");
@@ -610,43 +571,21 @@ namespace DATN_API.Migrations
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("DATN_API.Models.GioHang", b =>
-                {
-                    b.HasOne("DATN_API.Models.TaiKhoan", "TaiKhoan")
-                        .WithOne("GioHang")
-                        .HasForeignKey("DATN_API.Models.GioHang", "TaiKhoanID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TaiKhoan");
-                });
-
             modelBuilder.Entity("DATN_API.Models.GioHangChiTiet", b =>
                 {
                     b.HasOne("DATN_API.Models.GioHang", "GioHang")
                         .WithMany("GioHangChiTiets")
                         .HasForeignKey("GioHangID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.SanPham", "SanPham")
-                        .WithMany()
+                        .WithMany("GioHangChiTiets")
                         .HasForeignKey("SanPhamID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("GioHang");
-
-                    b.Navigation("SanPham");
-                });
-
-            modelBuilder.Entity("DATN_API.Models.MaGiamGia", b =>
-                {
-                    b.HasOne("DATN_API.Models.SanPham", "SanPham")
-                        .WithMany("MaGiamGias")
-                        .HasForeignKey("SanPhamID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("SanPham");
                 });
@@ -656,7 +595,7 @@ namespace DATN_API.Migrations
                     b.HasOne("DATN_API.Models.TaiKhoan", "TaiKhoan")
                         .WithOne()
                         .HasForeignKey("DATN_API.Models.NhanVien", "TaiKhoanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TaiKhoan");
@@ -667,13 +606,13 @@ namespace DATN_API.Migrations
                     b.HasOne("DATN_API.Models.NhanHieu", "NhanHieu")
                         .WithMany("SanPhams")
                         .HasForeignKey("NhanHieuID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.PhanLoai", "PhanLoai")
                         .WithMany("SanPhams")
                         .HasForeignKey("PhanLoaiID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("NhanHieu");
@@ -681,30 +620,27 @@ namespace DATN_API.Migrations
                     b.Navigation("PhanLoai");
                 });
 
-            modelBuilder.Entity("DATN_API.Models.SanPhamChiTiet", b =>
-                {
-                    b.HasOne("DATN_API.Models.SanPham", "SanPham")
-                        .WithMany("SanPhamChiTiets")
-                        .HasForeignKey("SanPhamID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SanPham");
-                });
-
             modelBuilder.Entity("DATN_API.Models.TaiKhoan", b =>
                 {
+                    b.HasOne("DATN_API.Models.GioHang", "GioHang")
+                        .WithOne()
+                        .HasForeignKey("DATN_API.Models.TaiKhoan", "GioHangID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("DATN_API.Models.KhachHang", "KhachHang")
                         .WithMany("TaiKhoans")
                         .HasForeignKey("KhachHangID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DATN_API.Models.PhanQuyen", "PhanQuyen")
                         .WithMany("TaiKhoans")
-                        .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("PhanQuyenID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("GioHang");
 
                     b.Navigation("KhachHang");
 
@@ -716,7 +652,7 @@ namespace DATN_API.Migrations
                     b.HasOne("DATN_API.Models.TaiKhoan", "TaiKhoan")
                         .WithMany()
                         .HasForeignKey("TaiKhoanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TaiKhoan");
@@ -737,6 +673,11 @@ namespace DATN_API.Migrations
                     b.Navigation("TaiKhoans");
                 });
 
+            modelBuilder.Entity("DATN_API.Models.MaGiamGia", b =>
+                {
+                    b.Navigation("DonHangChiTiets");
+                });
+
             modelBuilder.Entity("DATN_API.Models.NhanHieu", b =>
                 {
                     b.Navigation("SanPhams");
@@ -764,15 +705,9 @@ namespace DATN_API.Migrations
 
             modelBuilder.Entity("DATN_API.Models.SanPham", b =>
                 {
-                    b.Navigation("MaGiamGias");
+                    b.Navigation("DonHangChiTiets");
 
-                    b.Navigation("SanPhamChiTiets");
-                });
-
-            modelBuilder.Entity("DATN_API.Models.TaiKhoan", b =>
-                {
-                    b.Navigation("GioHang")
-                        .IsRequired();
+                    b.Navigation("GioHangChiTiets");
                 });
 #pragma warning restore 612, 618
         }

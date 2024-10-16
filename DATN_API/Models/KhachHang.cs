@@ -1,33 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DATN_API.Models
 {
     public class KhachHang
     {
         [Key]
-        public int KhachHangID { get; set; }
+        public long KhachHangID { get; set; }
 
-        [Required(ErrorMessage = "Tên khách hàng không được để trống")]
-        [StringLength(100, ErrorMessage = "Tên khách hàng không được vượt quá 100 ký tự")]
+        [Required(ErrorMessage = "Tên khách hàng là bắt buộc")]
+        [StringLength(100, ErrorMessage = "Tên khách hàng không được dài quá 100 ký tự")]
         public string TenKhachHang { get; set; }
 
-        [Required(ErrorMessage = "Địa chỉ không được để trống")]
+        [Required(ErrorMessage = "Địa chỉ là bắt buộc")]
         public string DiaChi { get; set; }
 
-        [Required(ErrorMessage = "Email không được để trống")]
+        [Required(ErrorMessage = "Email là bắt buộc")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
-        [StringLength(100, ErrorMessage = "Email không được vượt quá 100 ký tự")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Số điện thoại không được để trống")]
+        [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         public string SoDienThoai { get; set; }
 
-        [Required(ErrorMessage = "Ngày tạo không được để trống")]
+        [Required(ErrorMessage = "Ngày tạo là bắt buộc")]
         public DateTime NgayTao { get; set; }
 
-        public ICollection<TaiKhoan> TaiKhoans { get; set; }
+        public virtual ICollection<TaiKhoan> TaiKhoans { get; set; }
     }
 }

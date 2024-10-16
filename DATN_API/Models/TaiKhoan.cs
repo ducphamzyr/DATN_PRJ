@@ -1,41 +1,33 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DATN_API.Models
 {
     public class TaiKhoan
     {
         [Key]
-        public int TaiKhoanID { get; set; }
+        public long TaiKhoanID { get; set; }
 
-        public int? KhachHangID { get; set; }
+        [Required(ErrorMessage = "Mã khách hàng là bắt buộc")]
+        public long KhachHangID { get; set; }
 
-        [ForeignKey("KhachHangID")]
-        public KhachHang KhachHang { get; set; }
+        [Required(ErrorMessage = "Mã giỏ hàng là bắt buộc")]
+        public long GioHangID { get; set; }
 
-        public int? GioHangID { get; set; }
-
-        [ForeignKey("GioHangID")]
-        public GioHang GioHang { get; set; }
-
-        [Required(ErrorMessage = "Tên đăng nhập không được để trống")]
-        [StringLength(100, ErrorMessage = "Tên đăng nhập không được vượt quá 100 ký tự")]
+        [Required(ErrorMessage = "Tên đăng nhập là bắt buộc")]
+        [StringLength(50, ErrorMessage = "Tên đăng nhập không được dài quá 50 ký tự")]
         public string TenDangNhap { get; set; }
 
-        [Required(ErrorMessage = "Mật khẩu không được để trống")]
-        [StringLength(255, ErrorMessage = "Mật khẩu không được vượt quá 255 ký tự")]
+        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
         public string MatKhauHash { get; set; }
 
-        [Required(ErrorMessage = "Phân quyền không được để trống")]
-        public int RoleID { get; set; }
+        [Required(ErrorMessage = "Mã phân quyền là bắt buộc")]
+        public long PhanQuyenID { get; set; }
 
-        [ForeignKey("RoleID")]
-        public PhanQuyen PhanQuyen { get; set; }
-
-        [Required(ErrorMessage = "Ngày tạo không được để trống")]
+        [Required(ErrorMessage = "Ngày tạo là bắt buộc")]
         public DateTime CreateAt { get; set; }
 
-        public DateTime? GioHangID_1 { get; set; }
+        public virtual KhachHang KhachHang { get; set; }
+        public virtual GioHang GioHang { get; set; }
+        public virtual PhanQuyen PhanQuyen { get; set; }
     }
 }

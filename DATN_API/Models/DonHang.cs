@@ -1,48 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DATN_API.Models
 {
     public class DonHang
     {
         [Key]
-        public int DonHangID { get; set; }
+        public long DonHangID { get; set; }
 
-        [Required(ErrorMessage = "Tài khoản không được để trống")]
-        public int TaiKhoanID { get; set; }
+        [Required(ErrorMessage = "Mã tài khoản là bắt buộc")]
+        public long TaiKhoanID { get; set; }
 
-        [ForeignKey("TaiKhoanID")]
-        public TaiKhoan TaiKhoan { get; set; }
+        [Required(ErrorMessage = "Mã nhân viên là bắt buộc")]
+        public long NhanVienID { get; set; }
 
-        public int? NhanVienID { get; set; }
+        [Required(ErrorMessage = "Mã phương thức thanh toán là bắt buộc")]
+        public long PhuongThucThanhToanID { get; set; }
 
-        [ForeignKey("NhanVienID")]
-        public NhanVien NhanVien { get; set; }
-
-        [Required(ErrorMessage = "Phương thức thanh toán không được để trống")]
-        public int PhuongThucThanhToanID { get; set; }
-
-        [ForeignKey("PhuongThucThanhToanID")]
-        public PhuongThucThanhToan PhuongThucThanhToan { get; set; }
-
-        [Required(ErrorMessage = "Ghi chú không được để trống")]
-        [StringLength(500, ErrorMessage = "Ghi chú không được vượt quá 500 ký tự")]
         public string GhiChu { get; set; }
 
-        [Required(ErrorMessage = "Ngày đặt hàng không được để trống")]
+        [Required(ErrorMessage = "Ngày đặt hàng là bắt buộc")]
         public DateTime NgayDatHang { get; set; }
 
-        [Required(ErrorMessage = "Trạng thái không được để trống")]
+        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public string TrangThai { get; set; }
 
-        [Required(ErrorMessage = "Địa chỉ giao hàng không được để trống")]
-        [StringLength(200, ErrorMessage = "Địa chỉ giao hàng không được vượt quá 200 ký tự")]
+        [Required(ErrorMessage = "Địa chỉ giao hàng là bắt buộc")]
         public string DiaChiGiaoHang { get; set; }
 
-        public DateTime? CapNhatLanCuoi { get; set; }
+        [Required(ErrorMessage = "Ngày cập nhật lần cuối là bắt buộc")]
+        public DateTime CapNhatLanCuoi { get; set; }
 
-        public ICollection<DonHangChiTiet> DonHangChiTiets { get; set; }
+        public virtual TaiKhoan TaiKhoan { get; set; }
+        public virtual NhanVien NhanVien { get; set; }
+        public virtual PhuongThucThanhToan PhuongThucThanhToan { get; set; }
+        public virtual ICollection<DonHangChiTiet> DonHangChiTiets { get; set; }
     }
 }

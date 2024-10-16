@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DATN_API.Models
 {
     public class GioHang
     {
         [Key]
-        public int GioHangID { get; set; }
+        public long GioHangID { get; set; }
 
-        [Required(ErrorMessage = "Tài khoản không được để trống")]
-        public int TaiKhoanID { get; set; }
-
-        [ForeignKey("TaiKhoanID")]
-        public TaiKhoan TaiKhoan { get; set; }
-
-        [Required(ErrorMessage = "Ngày cập nhật cuối không được để trống")]
+        [Required(ErrorMessage = "Ngày cập nhật lần cuối là bắt buộc")]
         public DateTime CapNhatLanCuoi { get; set; }
 
-        public ICollection<GioHangChiTiet> GioHangChiTiets { get; set; }
+        public virtual ICollection<GioHangChiTiet> GioHangChiTiets { get; set; }
     }
 }
