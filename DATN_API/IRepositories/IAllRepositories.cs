@@ -1,6 +1,8 @@
-﻿namespace DATN_API.IRepositories
+﻿using DATN_API.Models;
+
+namespace DATN_API.IRepositories
 {
-    internal interface IAllRepositories<T>    where T : class
+    internal interface IAllRepositories<T> where T : class
     {
         public Task<ICollection<T>> GetAll();
         public Task<T> GetById(dynamic id);
