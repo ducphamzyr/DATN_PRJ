@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DATN_API.Controllers;
 using DATN_API.IRepositories;
 using DATN_API.Repositories;
+using DATN_API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped(typeof(IAllRepositories<>), typeof(AllRepositories<>));
+    builder.Services.AddScoped(typeof(AllRepositories<>)); 
+
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
