@@ -2,7 +2,7 @@
 
 namespace DATN_API.IRepositories
 {
-    internal interface IAllRepositories<T> where T : class
+    public interface IAllRepositories<T> where T : class
     {
         public Task<ICollection<T>> GetAll();
         public Task<T> GetById(dynamic id);

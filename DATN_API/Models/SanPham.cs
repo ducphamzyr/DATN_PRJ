@@ -47,10 +47,9 @@ namespace DATN_API.Models
         [Required(ErrorMessage = "Số lượng còn lại là bắt buộc")]
         [Range(0, int.MaxValue, ErrorMessage = "Số lượng còn lại phải lớn hơn hoặc bằng 0")]
         public int ConLai { get; set; }
-
-        public virtual NhanHieu NhanHieu { get; set; }
-        public virtual PhanLoai PhanLoai { get; set; }
-        public virtual ICollection<DonHangChiTiet> DonHangChiTiets { get; set; }
-        public virtual ICollection<GioHangChiTiet> GioHangChiTiets { get; set; }
+        public virtual NhanHieu? NhanHieu { get; set; }
+        public virtual PhanLoai? PhanLoai { get; set; }
+        public virtual ICollection<DonHangChiTiet>? DonHangChiTiets { get; set; }
+        public virtual ICollection<GioHangChiTiet>? GioHangChiTiets { get; set; }
     }
 }

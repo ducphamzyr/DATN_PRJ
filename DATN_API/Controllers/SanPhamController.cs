@@ -10,9 +10,9 @@ namespace DATN_API.Controllers
     [ApiController]
     public class SanPhamController : ControllerBase
     {
-        IAllRepositories<SanPham> _sanPhamRepository;
+        private readonly IAllRepositories<SanPham> _sanPhamRepository;
 
-        public SanPhamController(AllRepositories<SanPham> sanPhamRepository)
+        public SanPhamController(IAllRepositories<SanPham> sanPhamRepository)
         {
             _sanPhamRepository = sanPhamRepository;
         }
@@ -55,16 +55,34 @@ namespace DATN_API.Controllers
         }
         //sửa
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Update(long id, SanPham sanPham)
+        public async Task<IActionResult> Update(SanPham sanPham)
         {
-            if (id != sanPham.SanPhamID)
-            {
-                return BadRequest();
-            }
             try
             {
-                await _sanPhamRepository.Update(sanPham);
-                return Ok(sanPham);
+                if (ModelState.IsValid)
+                {
+                    SanPham sanPhamEdit = await _sanPhamRepository.GetById(sanPham.SanPhamID);
+                    if (sanPhamEdit == null)
+                    {
+                        return NotFound();
+                    }
+                    sanPhamEdit.TenSanPham = sanPham.TenSanPham;
+                    sanPhamEdit.NhanHieuID = sanPham.NhanHieuID;
+                    sanPhamEdit.NgayKhoiTao = sanPham.NgayKhoiTao;
+                    sanPhamEdit.TrangThai = sanPham.TrangThai;
+                    sanPhamEdit.GhiChu = sanPham.GhiChu;
+                    sanPhamEdit.PhanLoaiID = sanPham.PhanLoaiID;
+                    sanPhamEdit.Mau = sanPham.Mau;
+                    sanPhamEdit.BoNho = sanPham.BoNho;
+                    sanPhamEdit.KheSim = sanPham.KheSim;
+                    sanPhamEdit.Ram = sanPham.Ram;
+                    sanPhamEdit.Gia = sanPham.Gia;
+                    sanPhamEdit.ConLai = sanPham.ConLai;
+
+                    await _sanPhamRepository.Update(sanPhamEdit);
+                    return Ok(sanPhamEdit);
+                }
+                return BadRequest();
             }
             catch (Exception e)
             {
@@ -83,7 +101,7 @@ namespace DATN_API.Controllers
             }
             try
             {
-                await _sanPhamRepository.Delete(sanPham);
+                await _sanPhamRepository.Delete(sanPham.SanPhamID);
                 return Ok();
             }
             catch (Exception e)
