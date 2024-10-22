@@ -1,4 +1,5 @@
-﻿using DATN_API.Models;
+﻿using DATN_API.IRepositories;
+using DATN_API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,107 +10,92 @@ namespace DATN_API.Controllers
     [ApiController]
     public class NhanHieuController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IAllRepositories<NhanHieu> _nhanHieuRepository;
 
-        public NhanHieuController(AppDbContext context)
+        public NhanHieuController(IAllRepositories<NhanHieu> nhanHieuRepository)
         {
-            _context = context;
+            _nhanHieuRepository = nhanHieuRepository;
         }
 
-        // GET: api/NhanHieus
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<NhanHieu>>> GetNhanHieus()
+        //lấy tất cả
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAll()
         {
-            if (_context.NhanHieus == null)
-            {
-                return NotFound();
-            }
-            return await _context.NhanHieus.ToListAsync();
+            var nhanHieus = await _nhanHieuRepository.GetAll();
+            return Ok(nhanHieus);
         }
 
-        // GET: api/NhanHieus/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<NhanHieu>> GetNhanHieu(long id)
+        //lấy theo id
+        [HttpGet("get-by-id/{id}")]
+        public async Task<IActionResult> GetById(long id)
         {
-            if (_context.NhanHieus == null)
-            {
-                return NotFound();
-            }
-            var nhanHieu = await _context.NhanHieus.FindAsync(id);
-
+            var nhanHieu = await _nhanHieuRepository.GetById(id);
             if (nhanHieu == null)
             {
                 return NotFound();
             }
-
-            return nhanHieu;
+            return Ok(nhanHieu);
         }
 
-        // PUT: api/NhanHieus/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutNhanHieu(long id, NhanHieu nhanHieu)
+        //thêm
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(NhanHieu nhanHieu)
         {
-            if (id != nhanHieu.NhanHieuID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(nhanHieu).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    await _nhanHieuRepository.Create(nhanHieu);
+                    return Ok(nhanHieu);
+                }
+                return BadRequest();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!NhanHieuExists(id))
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
+            }
+        }
+
+        //sửa
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(NhanHieu nhanHieu)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _nhanHieuRepository.Update(nhanHieu);
+                    return Ok(nhanHieu);
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
+            }
+        }
+
+        //xóa
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            try
+            {
+                var nhanHieu = await _nhanHieuRepository.GetById(id);
+                if (nhanHieu == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                await _nhanHieuRepository.Delete(nhanHieu);
+                return Ok();
             }
-
-            return NoContent();
-        }
-
-        private bool NhanHieuExists(long id)
-        {
-            return _context.NhanHieus.Any(e => e.NhanHieuID == id);
-        }
-
-        // POST: api/NhanHieus
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<NhanHieu>> PostNhanHieu(NhanHieu nhanHieu)
-        {
-            _context.NhanHieus.Add(nhanHieu);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNhanHieu", new { id = nhanHieu.NhanHieuID }, nhanHieu);
-        }
-
-        // DELETE: api/NhanHieus/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<NhanHieu>> DeleteNhanHieu(long id)
-        {
-            if (_context.NhanHieus == null)
+            catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
             }
-            var nhanHieu = await _context.NhanHieus.FindAsync(id);
-            if (nhanHieu == null)
-            {
-                return NotFound();
-            }
-
-            _context.NhanHieus.Remove(nhanHieu);
-            await _context.SaveChangesAsync();
-
-            return nhanHieu;
         }
     }
 }

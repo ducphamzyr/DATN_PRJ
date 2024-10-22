@@ -11,107 +11,95 @@ namespace DATN_API.Controllers
     [ApiController]
     public class PhanLoaiController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IAllRepositories<PhanLoai> _phanLoaiRepository;
 
-        public PhanLoaiController(AppDbContext context)
+        public PhanLoaiController(IAllRepositories<PhanLoai> phanLoaiRepository)
         {
-            _context = context;
+            _phanLoaiRepository = phanLoaiRepository;
         }
 
-        // GET: api/PhanLoais
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<PhanLoai>>> GetPhanLoais()
+        //lấy tất cả
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAll()
         {
-            if (_context.PhanLoais == null)
-            {
-                return NotFound();
-            }
-            return await _context.PhanLoais.ToListAsync();
+            var phanLoais = await _phanLoaiRepository.GetAll();
+            return Ok(phanLoais);
         }
 
-        // GET: api/PhanLoais/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PhanLoai>> GetPhanLoai(long id)
-        {
-            if (_context.PhanLoais == null)
-            {
-                return NotFound();
-            }
-            var phanLoai = await _context.PhanLoais.FindAsync(id);
+        //lấy theo id
 
+        [HttpGet("get-by-id/{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            var phanLoai = await _phanLoaiRepository.GetById(id);
             if (phanLoai == null)
             {
                 return NotFound();
             }
-
-            return phanLoai;
+            return Ok(phanLoai);
         }
 
-        // PUT: api/PhanLoais/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhanLoai(long id, PhanQuyen phanQuyen)
+        //thêm
+        [HttpPost("create")]
+        public async Task<IActionResult> Create(PhanLoai phanLoai)
         {
-            if (id != phanQuyen.PhanQuyenID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(phanQuyen).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    await _phanLoaiRepository.Create(phanLoai);
+                    return Ok(phanLoai);
+                }
+                return BadRequest();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!PhanLoaiExists(id))
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
+            }
+        }
+
+        //sửa
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(PhanLoai phanLoai)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _phanLoaiRepository.Update(phanLoai);
+                    return Ok(phanLoai);
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
+            }
+        }
+
+        //xóa
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            try
+            {
+                var phanLoai = await _phanLoaiRepository.GetById(id);
+                if (phanLoai == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                await _phanLoaiRepository.Delete(phanLoai);
+                return Ok();
             }
-
-            return NoContent();
-        }
-
-        private bool PhanLoaiExists(long id)
-        {
-            return _context.PhanLoais.Any(e => e.PhanLoaiID == id);
-        }
-
-        // POST: api/PhanLoais
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<PhanLoai>> PostPhanLoai(PhanLoai phanLoai)
-        {
-            _context.PhanLoais.Add(phanLoai);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPhanLoai", new { id = phanLoai.PhanLoaiID }, phanLoai);
-        }
-
-        // DELETE: api/PhanLoais/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePhanLoai(long id)
-        {
-            if (_context.PhanLoais == null)
+            catch (Exception e)
             {
-                return NotFound();
+                Console.WriteLine(e.InnerException.Message, e.Message);
+                return BadRequest();
             }
-            var phanLoai = await _context.PhanLoais.FindAsync(id);
-            if (phanLoai == null)
-            {
-                return NotFound();
-            }
-
-            _context.PhanLoais.Remove(phanLoai);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
+
+
     }
 }
