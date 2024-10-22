@@ -12,6 +12,23 @@ namespace DATN_API.Repositories
 
         public AllRepositories(AppDbContext context)
         {
+            var allowedTypes = new HashSet<Type>
+            {
+                typeof(DonHang),
+                typeof(DonHangChiTiet),
+                typeof(GioHang),
+                typeof(GioHangChiTiet),
+                typeof(MaGiamGia),
+                typeof(NhanHieu),
+                typeof(PhanLoai),
+                typeof(PhuongThucThanhToan),
+                typeof(SanPham),
+                typeof(ThongBao)
+            };
+            if (!allowedTypes.Contains(typeof(T)))
+            {
+                throw new InvalidOperationException($"Type {typeof(T).Name} is not allowed.");
+            }
             _context = context;
             _dbSet = context.Set<T>();
         }
