@@ -17,7 +17,7 @@ namespace DATN_API.Controllers
             _nhanHieuRepository = nhanHieuRepository;
         }
 
-        //lấy tất cả
+        //lấy tất cả//
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
         {
