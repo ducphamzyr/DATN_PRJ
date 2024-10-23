@@ -58,6 +58,12 @@ namespace DATN_API
                 .HasForeignKey(s => s.PhanLoaiID)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<SanPham>()
+                .Navigation(s => s.NhanHieu).AutoInclude();
+
+            modelBuilder.Entity<SanPham>()
+                .Navigation(s => s.PhanLoai).AutoInclude();
+
             // DonHang relationships
             modelBuilder.Entity<DonHang>()
                 .HasOne(d => d.TaiKhoan)
