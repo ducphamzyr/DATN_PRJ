@@ -23,7 +23,10 @@ namespace DATN_API.Repositories
                 typeof(PhanLoai),
                 typeof(PhuongThucThanhToan),
                 typeof(SanPham),
-                typeof(ThongBao)
+                typeof(ThongBao),
+                typeof(PhanQuyen),
+                typeof(TaiKhoan),
+                typeof(KhachHang)
             };
             if (!allowedTypes.Contains(typeof(T)))
             {
