@@ -9,6 +9,7 @@ namespace DATN_API.Models
 
         public long GioHangID { get; set; }
         public long SanPhamID { get; set; }
+        public string TenNguoiDung { get; set; }
 
         [Required(ErrorMessage = "Số lượng là bắt buộc")]
         [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải lớn hơn 0")]
