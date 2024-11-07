@@ -1,43 +1,120 @@
 ﻿using DATN_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace DATN_MVC.Controllers
 {
     public class GioHangController : Controller
     {
-        HttpClient _client;
-        public GioHangController(HttpClient client)
+        private readonly HttpClient _httpClient;
+
+        public GioHangController(HttpClient httpClient)
         {
-            _client = client;
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri("https://localhost:7255");
         }
-        public IActionResult Index()
+
+        // Hiển thị danh sách giỏ hàng
+        public async Task<IActionResult> Index()
         {
-            //if (User.Identity.IsAuthenticated)
+            var response = await _httpClient.GetAsync("GioHang/get-all");
+            if (!response.IsSuccessStatusCode) return View("Error");
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var gioHangs = JsonConvert.DeserializeObject<List<GioHang>>(jsonData);
+
+            return View(gioHangs);
+        }
+
+        // Hiển thị chi tiết giỏ hàng
+        public async Task<IActionResult> Details(long id)
+        {
+            var response = await _httpClient.GetAsync($"GioHang/get-by-id/{id}");
+            if (!response.IsSuccessStatusCode) return NotFound();
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var gioHang = JsonConvert.DeserializeObject<GioHang>(jsonData);
+
+            return View(gioHang);
+        }
+
+        // Trang thêm mới giỏ hàng
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(GioHang gioHang)
+        {
+            if (ModelState.IsValid)
             {
-                var username = User.Identity.Name;
-                if (username != null)
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(gioHang), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("GioHang/create", jsonContent);
+
+                if (response.IsSuccessStatusCode)
                 {
-
-                    string requestUrl = $"https://localhost:7255/api/CartDetails/get-cartdetails?id={username}";
-
-                    var response = _client.GetStringAsync(requestUrl).Result;
-
-                    var allCartItem = JsonConvert.DeserializeObject<List<GioHangChiTiet>>(response);
-
-                    return View(allCartItem);
-
+                    return RedirectToAction(nameof(Index));
                 }
-                else
-                {
-                    return View();
-                }
-
             }
-            //else
+            return View(gioHang);
+        }
+
+        // Trang cập nhật giỏ hàng
+        public async Task<IActionResult> Edit(long id)
+        {
+            var response = await _httpClient.GetAsync($"GioHang/get-by-id/{id}");
+            if (!response.IsSuccessStatusCode) return NotFound();
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var gioHang = JsonConvert.DeserializeObject<GioHang>(jsonData);
+
+            return View(gioHang);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, GioHang gioHang)
+        {
+            if (id != gioHang.GioHangID) return BadRequest();
+
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Login", "Accounts");
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(gioHang), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"GioHang/update/{id}", jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            return View(gioHang);
+        }
+
+        // Xóa giỏ hàng
+        public async Task<IActionResult> Delete(long id)
+        {
+            var response = await _httpClient.GetAsync($"GioHang/get-by-id/{id}");
+            if (!response.IsSuccessStatusCode) return NotFound();
+
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var gioHang = JsonConvert.DeserializeObject<GioHang>(jsonData);
+
+            return View(gioHang);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            var response = await _httpClient.DeleteAsync($"GioHang/delete/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Error");
         }
     }
 }
