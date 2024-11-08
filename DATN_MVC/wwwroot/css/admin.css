@@ -1,0 +1,103 @@
+﻿/* wwwroot/css/admin.css */
+:root {
+    --sidebar-width: 250px;
+}
+
+#wrapper {
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: var(--sidebar-width);
+    margin-left: 0;
+    transition: margin 0.25s ease-out;
+}
+
+    #sidebar-wrapper .sidebar-heading {
+        padding: 0.875rem 1.25rem;
+        font-size: 1.2rem;
+    }
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0.75rem 1.25rem;
+}
+
+    .list-group-item:hover {
+        background-color: #2c3136 !important;
+        border-left: 4px solid #007bff;
+    }
+
+    .list-group-item.active {
+        background-color: #2c3136 !important;
+        border-left: 4px solid #007bff;
+    }
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: calc(var(--sidebar-width) * -1);
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: calc(var(--sidebar-width) * -1);
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+/* Card Styling */
+.dashboard-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+/* Custom Colors */
+.bg-gradient-primary {
+    background: linear-gradient(45deg, #4e73df 0%, #224abe 100%);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(45deg, #1cc88a 0%, #13855c 100%);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(45deg, #36b9cc 0%, #258391 100%);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(45deg, #f6c23e 0%, #dda20a 100%);
+}

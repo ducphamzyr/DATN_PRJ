@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DATN_API", "DATN_API\DATN_API.csproj", "{F62BB1AC-DCDC-48F5-BCC6-FF205A266E79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppDATA", "AppDATA\AppDATA.csproj", "{2212F72D-27C0-4BB6-9078-388E2ED618F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DATN_MVC", "DATN_MVC\DATN_MVC.csproj", "{B688F7A2-F6BD-4380-A973-5A858ADAD534}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F62BB1AC-DCDC-48F5-BCC6-FF205A266E79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62BB1AC-DCDC-48F5-BCC6-FF205A266E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62BB1AC-DCDC-48F5-BCC6-FF205A266E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62BB1AC-DCDC-48F5-BCC6-FF205A266E79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2212F72D-27C0-4BB6-9078-388E2ED618F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B688F7A2-F6BD-4380-A973-5A858ADAD534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B688F7A2-F6BD-4380-A973-5A858ADAD534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B688F7A2-F6BD-4380-A973-5A858ADAD534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B688F7A2-F6BD-4380-A973-5A858ADAD534}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5FC0856-58E8-4519-967B-8B526F70D743}
+	EndGlobalSection
+EndGlobal
