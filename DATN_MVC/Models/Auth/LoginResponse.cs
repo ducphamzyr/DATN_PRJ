@@ -2,7 +2,6 @@
 {
     public class LoginResponse
     {
-        public int Id { get; set; }  // Thêm property Id
         public string Token { get; set; }
         public string TenDangNhap { get; set; }
         public string TenKhachHang { get; set; }

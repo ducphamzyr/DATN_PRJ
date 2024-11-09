@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace DATN_MVC.Controllers
 {
-    public class HomeController : UserBaseController
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {

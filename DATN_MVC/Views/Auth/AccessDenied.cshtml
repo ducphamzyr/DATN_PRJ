@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Không có quyền truy cập";
+    ViewData["Title"] = "Từ chối truy cập";
 }
 
-<div class="text-center mt-5">
+<div class="container py-5 text-center">
     <h1 class="text-danger">403</h1>
-    <h2 class="text-danger">Không có quyền truy cập</h2>
+    <h2 class="text-danger">Từ chối truy cập</h2>
     <p>Bạn không có quyền truy cập trang này.</p>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Về trang chủ</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Về trang chủ</a>
 </div>

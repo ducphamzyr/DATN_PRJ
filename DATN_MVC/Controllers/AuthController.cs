@@ -1,104 +1,160 @@
-﻿using DATN_MVC.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using DATN_MVC.Models.Auth;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
+using DATN_MVC.Services;
 using System.Text.Json;
+using DATN_MVC.Models;
 
-public class AuthController : Controller
+namespace DATN_MVC.Controllers
 {
-    private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
-
-    public AuthController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public class AuthController : Controller
     {
-        if (httpClientFactory == null)
-            throw new ArgumentNullException(nameof(httpClientFactory));
+        private readonly ISessionService _sessionService;
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        _httpClient = httpClientFactory.CreateClient();
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
-        var baseUrl = _configuration["ApiSettings:BaseUrl"];
-        if (string.IsNullOrEmpty(baseUrl))
-            throw new InvalidOperationException("API Base URL is not configured");
-
-        _httpClient.BaseAddress = new Uri(baseUrl);
-    }
-
-    [HttpGet]
-    public IActionResult Login()
-    {
-        // Nếu đã đăng nhập, chuyển hướng theo role
-        if (HttpContext.Session.GetString("JWTToken") != null)
+        public AuthController(ISessionService sessionService, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
-            return RedirectBasedOnRole();
+            _sessionService = sessionService;
+            _httpClient = httpClientFactory.CreateClient();
+            _configuration = configuration;
+            _httpClient.BaseAddress = new Uri(_configuration["ApiSettings:BaseUrl"]);
         }
-        return View(new LoginModel());
-    }
 
-    [HttpPost]
-    public async Task<IActionResult> Login(LoginModel model)
-    {
-        if (!ModelState.IsValid)
-            return View(model);
-
-        try
+        #region Login
+        public IActionResult Login(string returnUrl = null)
         {
-            var loginData = new
+            if (_sessionService.IsLoggedIn())
             {
-                TenDangNhap = model.Username,
-                MatKhau = model.Password
-            };
+                return RedirectToAction("Index", "Home");
+            }
 
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
-            if (response.IsSuccessStatusCode)
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
             {
-                var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
-
-                if (result.Success)
+                try
                 {
-                    // Lưu thông tin vào session
-                    HttpContext.Session.SetString("JWTToken", result.Data.Token);
-                    HttpContext.Session.SetString("UserRole", result.Data.TenPhanQuyen);
-                    HttpContext.Session.SetString("UserName", result.Data.TenKhachHang);
-                    HttpContext.Session.SetString("UserId", result.Data.Id.ToString());
+                    var loginData = new
+                    {
+                        TenDangNhap = model.Username,
+                        MatKhau = model.Password
+                    };
+                    Console.WriteLine("POST DATA");
+                    var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("API OK RUI NE");
+                        var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
 
-                    return RedirectBasedOnRole();
+                        if (result.Success)
+                        {
+                            _sessionService.SaveLoginInfo(
+                                result.Data.Token,
+                                result.Data.TenKhachHang,
+                                result.Data.TenPhanQuyen
+                            );
+
+                            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            return RedirectToAction("Index", "Home");
+                        }
+                        ModelState.AddModelError("", result.Message);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Đăng nhập không thành công");
+                    }
                 }
-
-                ModelState.AddModelError("", result.Message);
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                }
             }
-            else
-            {
-                ModelState.AddModelError("", "Đăng nhập không thành công");
-            }
+            return View(model);
         }
-        catch (Exception ex)
+        #endregion
+
+        #region Register
+        public IActionResult Register()
         {
-            ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+            if (_sessionService.IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
         }
 
-        return View(model);
-    }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var registerData = new
+                    {
+                        TenDangNhap = model.Username,
+                        MatKhau = model.Password,
+                        TenKhachHang = model.FullName,
+                        Email = model.Email,
+                        SoDienThoai = model.PhoneNumber,
+                        DiaChi = model.Address
+                    };
 
-    [HttpPost]
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Clear();
-        return RedirectToAction("Login");
-    }
+                    var response = await _httpClient.PostAsJsonAsync("api/auth/register", registerData);
 
-    private IActionResult RedirectBasedOnRole()
-    {
-        var role = HttpContext.Session.GetString("UserRole");
-        return role == "Admin"
-            ? RedirectToAction("Index", "Home", new { area = "Admin" })
-            : RedirectToAction("Index", "Home");
-    }
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
 
-    [HttpGet]
-    public IActionResult AccessDenied()
-    {
-        return View();
+                        if (result.Success)
+                        {
+                            _sessionService.SaveLoginInfo(
+                                result.Data.Token,
+                                result.Data.TenKhachHang,
+                                result.Data.TenPhanQuyen
+                            );
+
+                            TempData["SuccessMessage"] = "Đăng ký thành công!";
+                            return RedirectToAction("Index", "Home");
+                        }
+                        ModelState.AddModelError("", result.Message);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Đăng ký không thành công");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                }
+            }
+            return View(model);
+        }
+        #endregion
+
+        #region Logout
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            _sessionService.ClearLoginInfo();
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
+
+        #region AccessDenied
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        #endregion
     }
 }

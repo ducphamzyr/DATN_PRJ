@@ -1,36 +1,53 @@
-﻿@model DATN_MVC.Models.Auth.LoginModel
+﻿<!-- Login.cshtml -->
+@model DATN_MVC.Models.Auth.LoginModel
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center">Đăng nhập</h3>
-                <form asp-action="Login" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="form-group mb-3">
-                        <label asp-for="Username" class="control-label"></label>
-                        <input asp-for="Username" class="form-control" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Đăng nhập</h2>
+                        <p class="text-muted">Chào mừng bạn trở lại!</p>
                     </div>
 
-                    <div class="form-group mb-3">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
+                    <form asp-action="Login" method="post">
+                        @if (!string.IsNullOrEmpty(ViewData["ReturnUrl"]?.ToString()))
+                        {
+                            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+                        }
 
-                    <div class="form-group mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <input asp-for="RememberMe" class="custom-control-input" />
-                            <label asp-for="RememberMe" class="custom-control-label">Ghi nhớ đăng nhập</label>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label"></label>
+                            <input asp-for="Username" class="form-control form-control-lg" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control form-control-lg" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label"></label>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-dark btn-lg w-100 mb-3">Đăng nhập</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0">
+                            Chưa có tài khoản?
+                            <a asp-action="Register" class="text-dark fw-bold">Đăng ký ngay</a>
+                        </p>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

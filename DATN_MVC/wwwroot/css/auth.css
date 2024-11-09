@@ -1,0 +1,38 @@
+﻿/* wwwroot/css/auth.css */
+.auth-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.auth-card {
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.auth-title {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.auth-subtitle {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.btn-auth {
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .btn-auth:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
