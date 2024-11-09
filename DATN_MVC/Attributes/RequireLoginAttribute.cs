@@ -24,10 +24,8 @@ namespace DATN_MVC.Attributes
         {
             if (!_sessionService.IsLoggedIn())
             {
-                // Lưu URL hiện tại để redirect sau khi đăng nhập
-                var returnUrl = context.HttpContext.Request.Path;
                 context.Result = new RedirectToActionResult("Login", "Auth",
-                    new { returnUrl = returnUrl });
+                    new { returnUrl = context.HttpContext.Request.Path });
             }
         }
     }

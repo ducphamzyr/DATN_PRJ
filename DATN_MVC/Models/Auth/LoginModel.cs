@@ -6,14 +6,13 @@ namespace DATN_MVC.Models.Auth
     {
         [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
         [Display(Name = "Tên đăng nhập")]
-        public string Username { get; set; }
+        public string TenDangNhap { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [Display(Name = "Mật khẩu")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string MatKhau { get; set; }
 
-        [Display(Name = "Ghi nhớ đăng nhập")]
         public bool RememberMe { get; set; }
     }
 }

@@ -11,7 +11,19 @@
 
         public bool IsLoggedIn()
         {
-            return !string.IsNullOrEmpty(_httpContextAccessor.HttpContext?.Session.GetString("JWTToken"));
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("JWTToken");
+            return !string.IsNullOrEmpty(token);
+        }
+
+        public bool IsAdmin()
+        {
+            var role = _httpContextAccessor.HttpContext?.Session.GetString("UserRole");
+            return role == "Admin";
+        }
+
+        public string GetUserToken()
+        {
+            return _httpContextAccessor.HttpContext?.Session.GetString("JWTToken");
         }
 
         public string GetUserName()
@@ -19,17 +31,9 @@
             return _httpContextAccessor.HttpContext?.Session.GetString("UserName");
         }
 
-        public void SaveLoginInfo(string token, string userName, string role)
+        public string GetUserRole()
         {
-            var session = _httpContextAccessor.HttpContext.Session;
-            session.SetString("JWTToken", token);
-            session.SetString("UserName", userName);
-            session.SetString("UserRole", role);
-        }
-
-        public void ClearLoginInfo()
-        {
-            _httpContextAccessor.HttpContext?.Session.Clear();
+            return _httpContextAccessor.HttpContext?.Session.GetString("UserRole");
         }
     }
 }

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="logo-container">
+                <img src="~/images/mobilehub_logo.png" alt="Logo" class="logo" />
+                <span class="logo-text">Admin Panel</span>
+            </div>
+
+            <!-- Menu -->
+            <div class="menu-section">
+                <div class="menu-title">QUẢN LÝ SẢN PHẨM</div>
+                <ul class="menu-items">
+                    <li><a href="/Admin/SanPham"><i class="fas fa-mobile-alt"></i> Sản phẩm</a></li>
+                    <li><a href="/Admin/NhanHieu"><i class="fas fa-tag"></i> Nhãn hiệu</a></li>
+                    <li><a href="/Admin/PhanLoai"><i class="fas fa-list"></i> Phân loại</a></li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <div class="menu-title">QUẢN LÝ ĐƠN HÀNG</div>
+                <ul class="menu-items">
+                    <li><a href="/Admin/DonHang"><i class="fas fa-shopping-cart"></i> Đơn hàng</a></li>
+                    <li><a href="/Admin/MaGiamGia"><i class="fas fa-percent"></i> Mã giảm giá</a></li>
+                </ul>
+            </div>
+
+            <div class="menu-section">
+                <div class="menu-title">QUẢN LÝ NGƯỜI DÙNG</div>
+                <ul class="menu-items">
+                    <li><a href="/Admin/KhachHang"><i class="fas fa-users"></i> Khách hàng</a></li>
+                    <li><a href="/Admin/NhanVien"><i class="fas fa-user-tie"></i> Nhân viên</a></li>
+                    <li><a href="/Admin/TaiKhoan"><i class="fas fa-user-circle"></i> Tài khoản</a></li>
+                    <li><a href="/Admin/PhanQuyen"><i class="fas fa-lock"></i> Phân quyền</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="search-container">
+                        <input type="search" class="form-control" placeholder="Tìm kiếm..." />
+                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="user-menu">
+                        <div class="notification">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                <img src="~/images/user.png" alt="User" class="user-avatar" />
+                                <span>@Context.Session.GetString("UserName")</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <form action="/Auth/Logout" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

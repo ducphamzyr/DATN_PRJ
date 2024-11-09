@@ -1,76 +1,133 @@
 ﻿@model DATN_MVC.Models.Auth.RegisterModel
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card border-0 shadow">
-                <div class="card-body p-5">
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold">Đăng ký tài khoản</h2>
-                        <p class="text-muted">Tạo tài khoản miễn phí!</p>
-                    </div>
-
-                    <form asp-action="Register" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Username" class="form-label"></label>
-                                <input asp-for="Username" class="form-control" />
-                                <span asp-validation-for="Username" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="FullName" class="form-label"></label>
-                                <input asp-for="FullName" class="form-control" />
-                                <span asp-validation-for="FullName" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Email" class="form-label"></label>
-                                <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="PhoneNumber" class="form-label"></label>
-                                <input asp-for="PhoneNumber" class="form-control" />
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Address" class="form-label"></label>
-                            <textarea asp-for="Address" class="form-control" rows="2"></textarea>
-                            <span asp-validation-for="Address" class="text-danger"></span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Password" class="form-label"></label>
-                                <input asp-for="Password" class="form-control" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="ConfirmPassword" class="form-label"></label>
-                                <input asp-for="ConfirmPassword" class="form-control" />
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                            </div>
-                        </div>
-
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="auth-card">
+                    <div class="p-5">
                         <div class="text-center">
-                            <button type="submit" class="btn btn-dark btn-lg w-100 mb-3">Đăng ký</button>
+                            <h1 class="auth-title">Đăng ký tài khoản</h1>
+                            <p class="auth-subtitle">Tạo tài khoản miễn phí!</p>
                         </div>
-                    </form>
 
-                    <div class="text-center mt-4">
-                        <p class="mb-0">
-                            Đã có tài khoản?
-                            <a asp-action="Login" class="text-dark fw-bold">Đăng nhập</a>
-                        </p>
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var error in ViewData.ModelState.Values
+                                   .SelectMany(v => v.Errors)
+                                   .Select(e => e.ErrorMessage)
+                                   .Distinct())
+                                    {
+                                        <li><i class="fas fa-exclamation-circle me-2"></i>@error</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+
+                        <form asp-action="Register" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="TenDangNhap" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Tên đăng nhập
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input asp-for="TenDangNhap" class="form-control"
+                                               placeholder="Nhập tên đăng nhập" />
+                                    </div>
+                                    <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="TenKhachHang" class="form-label">
+                                        <i class="fas fa-id-card me-2"></i>Họ và tên
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-id-card"></i>
+                                        <input asp-for="TenKhachHang" class="form-control"
+                                               placeholder="Nhập họ và tên" />
+                                    </div>
+                                    <span asp-validation-for="TenKhachHang" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Email" class="form-label">
+                                        <i class="fas fa-envelope me-2"></i>Email
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                        <input asp-for="Email" class="form-control"
+                                               placeholder="Nhập địa chỉ email" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="SoDienThoai" class="form-label">
+                                        <i class="fas fa-phone me-2"></i>Số điện thoại
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone"></i>
+                                        <input asp-for="SoDienThoai" class="form-control"
+                                               placeholder="Nhập số điện thoại" />
+                                    </div>
+                                    <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="DiaChi" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Địa chỉ
+                                </label>
+                                <div class="input-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <textarea asp-for="DiaChi" class="form-control" rows="2"
+                                              placeholder="Nhập địa chỉ của bạn"></textarea>
+                                </div>
+                                <span asp-validation-for="DiaChi" class="text-danger"></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="MatKhau" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Mật khẩu
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input asp-for="MatKhau" class="form-control"
+                                               placeholder="Nhập mật khẩu" />
+                                    </div>
+                                    <span asp-validation-for="MatKhau" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label asp-for="XacNhanMatKhau" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Xác nhận mật khẩu
+                                    </label>
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input asp-for="XacNhanMatKhau" class="form-control"
+                                               placeholder="Xác nhận mật khẩu" />
+                                    </div>
+                                    <span asp-validation-for="XacNhanMatKhau" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-auth">
+                                <i class="fas fa-user-plus me-2"></i>Đăng ký
+                            </button>
+                        </form>
+
+                        <div class="auth-footer">
+                            <p>
+                                Đã có tài khoản?
+                                <a asp-action="Login" class="auth-link">Đăng nhập</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

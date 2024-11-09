@@ -7,22 +7,22 @@ namespace DATN_MVC.Models.Auth
     {
         [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
         [Display(Name = "Tên đăng nhập")]
-        public string Username { get; set; }
+        public string TenDangNhap { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [Display(Name = "Mật khẩu")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string MatKhau { get; set; }
 
         [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu")]
         [Display(Name = "Xác nhận mật khẩu")]
-        [Compare("Password", ErrorMessage = "Mật khẩu không khớp")]
+        [Compare("MatKhau", ErrorMessage = "Mật khẩu không khớp")]
         [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
+        public string XacNhanMatKhau { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập họ tên")]
         [Display(Name = "Họ và tên")]
-        public string FullName { get; set; }
+        public string TenKhachHang { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập email")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
@@ -31,10 +31,10 @@ namespace DATN_MVC.Models.Auth
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         [Display(Name = "Số điện thoại")]
-        public string PhoneNumber { get; set; }
+        public string SoDienThoai { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ")]
         [Display(Name = "Địa chỉ")]
-        public string Address { get; set; }
+        public string DiaChi { get; set; }
     }
 }

@@ -1,160 +1,188 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DATN_MVC.Models;
 using DATN_MVC.Models.Auth;
 using DATN_MVC.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using System.Text.Json;
-using DATN_MVC.Models;
 
-namespace DATN_MVC.Controllers
+public class AuthController : Controller
 {
-    public class AuthController : Controller
+    private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private readonly ISessionService _sessionService;
+
+    public AuthController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ISessionService sessionService)
     {
-        private readonly ISessionService _sessionService;
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configuration;
+        if (httpClientFactory == null)
+            throw new ArgumentNullException(nameof(httpClientFactory));
 
-        public AuthController(ISessionService sessionService, IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        _httpClient = httpClientFactory.CreateClient();
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _sessionService = sessionService;
+
+        var baseUrl = _configuration["ApiSettings:BaseUrl"];
+        if (string.IsNullOrEmpty(baseUrl))
+            throw new InvalidOperationException("API Base URL is not configured");
+
+        _httpClient.BaseAddress = new Uri(baseUrl);
+    }
+
+    [HttpGet]
+    public IActionResult Login()
+    {
+        // Nếu đã đăng nhập, chuyển hướng theo role
+        if (HttpContext.Session.GetString("JWTToken") != null)
         {
-            _sessionService = sessionService;
-            _httpClient = httpClientFactory.CreateClient();
-            _configuration = configuration;
-            _httpClient.BaseAddress = new Uri(_configuration["ApiSettings:BaseUrl"]);
+            return RedirectBasedOnRole();
         }
+        return View(new LoginModel());
+    }
 
-        #region Login
-        public IActionResult Login(string returnUrl = null)
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginModel model)
+    {
+        if (ModelState.IsValid)
         {
-            if (_sessionService.IsLoggedIn())
+            try
             {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginModel model, string returnUrl = null)
-        {
-            if (ModelState.IsValid)
-            {
-                try
+                var loginData = new
                 {
-                    var loginData = new
-                    {
-                        TenDangNhap = model.Username,
-                        MatKhau = model.Password
-                    };
-                    Console.WriteLine("POST DATA");
-                    var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        Console.WriteLine("API OK RUI NE");
-                        var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
+                    TenDangNhap = model.TenDangNhap,  // Đã đổi từ Username
+                    MatKhau = model.MatKhau           // Đã đổi từ Password
+                };
 
-                        if (result.Success)
-                        {
-                            _sessionService.SaveLoginInfo(
-                                result.Data.Token,
-                                result.Data.TenKhachHang,
-                                result.Data.TenPhanQuyen
-                            );
+                var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
 
-                            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                            {
-                                return Redirect(returnUrl);
-                            }
-                            return RedirectToAction("Index", "Home");
-                        }
-                        ModelState.AddModelError("", result.Message);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Đăng nhập không thành công");
-                    }
+                // Parse response content
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
+
+                if (result.Success)
+                {
+                    // Lưu thông tin vào session
+                    HttpContext.Session.SetString("JWTToken", result.Data.Token);
+                    HttpContext.Session.SetString("UserRole", result.Data.TenPhanQuyen);
+                    HttpContext.Session.SetString("UserName", result.Data.TenKhachHang);
+                    HttpContext.Session.SetString("UserId", result.Data.Id.ToString());
+
+                    return RedirectBasedOnRole();
                 }
-                catch (Exception ex)
+                else
                 {
-                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+                    // Add API error message to ModelState
+                    ModelState.AddModelError("", result.Message);
                 }
             }
-            return View(model);
-        }
-        #endregion
-
-        #region Register
-        public IActionResult Register()
-        {
-            if (_sessionService.IsLoggedIn())
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", $"Lỗi hệ thống: {ex.Message}");
             }
-            return View();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterModel model)
+        return View(model);
+    }
+    [HttpGet]
+    public IActionResult Register()
+    {
+        if (_sessionService.IsLoggedIn())
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var registerData = new
-                    {
-                        TenDangNhap = model.Username,
-                        MatKhau = model.Password,
-                        TenKhachHang = model.FullName,
-                        Email = model.Email,
-                        SoDienThoai = model.PhoneNumber,
-                        DiaChi = model.Address
-                    };
-
-                    var response = await _httpClient.PostAsJsonAsync("api/auth/register", registerData);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
-
-                        if (result.Success)
-                        {
-                            _sessionService.SaveLoginInfo(
-                                result.Data.Token,
-                                result.Data.TenKhachHang,
-                                result.Data.TenPhanQuyen
-                            );
-
-                            TempData["SuccessMessage"] = "Đăng ký thành công!";
-                            return RedirectToAction("Index", "Home");
-                        }
-                        ModelState.AddModelError("", result.Message);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Đăng ký không thành công");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", $"Lỗi: {ex.Message}");
-                }
-            }
-            return View(model);
-        }
-        #endregion
-
-        #region Logout
-        [HttpPost]
-        public IActionResult Logout()
-        {
-            _sessionService.ClearLoginInfo();
             return RedirectToAction("Index", "Home");
         }
-        #endregion
-
-        #region AccessDenied
-        public IActionResult AccessDenied()
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterModel model)
+    {
+        if (ModelState.IsValid)
         {
-            return View();
+            try
+            {
+                var registerData = new
+                {
+                    TenDangNhap = model.TenDangNhap,
+                    MatKhau = model.MatKhau,
+                    XacNhanMatKhau = model.XacNhanMatKhau,
+                    TenKhachHang = model.TenKhachHang,
+                    Email = model.Email,
+                    SoDienThoai = model.SoDienThoai,
+                    DiaChi = model.DiaChi
+                };
+
+                var response = await _httpClient.PostAsJsonAsync("api/auth/register", registerData);
+
+                // Parse response content
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
+
+                if (result.Success)
+                {
+                    // Lưu thông tin vào session
+                    HttpContext.Session.SetString("JWTToken", result.Data.Token);
+                    HttpContext.Session.SetString("UserRole", result.Data.TenPhanQuyen);
+                    HttpContext.Session.SetString("UserName", result.Data.TenKhachHang);
+                    HttpContext.Session.SetString("UserId", result.Data.Id.ToString());
+
+                    return RedirectBasedOnRole();
+                }
+                else
+                {
+                    // Add API error message to ModelState
+                    ModelState.AddModelError("", result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Lỗi hệ thống: {ex.Message}");
+            }
         }
-        #endregion
+        return View(model);
+    }
+    [HttpGet]
+    public IActionResult ForgotPassword()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/auth/reset-password", new { Email = model.Email });
+                var result = await response.Content.ReadFromJsonAsync<ApiResponse<bool>>();
+
+                if (result.Success)
+                {
+                    TempData["SuccessMessage"] = "Mật khẩu đã được reset thành: 123456";
+                    return RedirectToAction("Login");
+                }
+
+                ModelState.AddModelError("", result.Message ?? "Không thể reset mật khẩu");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Lỗi: {ex.Message}");
+            }
+        }
+        return View(model);
+    }
+    [HttpPost]
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Login");
+    }
+
+    private IActionResult RedirectBasedOnRole()
+    {
+        var role = HttpContext.Session.GetString("UserRole");
+        return role == "Admin"
+            ? RedirectToAction("Index", "Home", new { area = "Admin" })
+            : RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }

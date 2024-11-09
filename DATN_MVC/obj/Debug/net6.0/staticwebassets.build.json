@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iWudwKqgG2fz9TwLyJABS32qq6/bdTw2jDRuuavS4UE=",
+  "Hash": "VytfhNDyRlYd/F48cvGQSZP3UK1sATr3zJVZ5dCtzXU=",
   "Source": "DATN_MVC",
   "BasePath": "_content/DATN_MVC",
   "Mode": "Default",
@@ -423,6 +423,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\mastercard.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\images\\mobilehub_logo.png",
+      "SourceId": "DATN_MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\",
+      "BasePath": "_content/DATN_MVC",
+      "RelativePath": "images/mobilehub_logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\mobilehub_logo.png"
     },
     {
       "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\images\\paypal.jpg",
@@ -1003,6 +1020,23 @@
       "OriginalItemSpec": "wwwroot\\images\\single-post.jpg"
     },
     {
+      "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\images\\user.png",
+      "SourceId": "DATN_MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\",
+      "BasePath": "_content/DATN_MVC",
+      "RelativePath": "images/user.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\user.png"
+    },
+    {
       "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\images\\visa.jpg",
       "SourceId": "DATN_MVC",
       "SourceType": "Discovered",
@@ -1018,6 +1052,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\visa.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\js\\admin.js",
+      "SourceId": "DATN_MVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\",
+      "BasePath": "_content/DATN_MVC",
+      "RelativePath": "js/admin.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\admin.js"
     },
     {
       "Identity": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\wwwroot\\js\\ajax-loader.gif",

@@ -1,51 +1,89 @@
-﻿<!-- Login.cshtml -->
-@model DATN_MVC.Models.Auth.LoginModel
+﻿@model DATN_MVC.Models.Auth.LoginModel
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card border-0 shadow">
-                <div class="card-body p-5">
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold">Đăng nhập</h2>
-                        <p class="text-muted">Chào mừng bạn trở lại!</p>
-                    </div>
-
-                    <form asp-action="Login" method="post">
-                        @if (!string.IsNullOrEmpty(ViewData["ReturnUrl"]?.ToString()))
-                        {
-                            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
-                        }
-
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <div class="mb-3">
-                            <label asp-for="Username" class="form-label"></label>
-                            <input asp-for="Username" class="form-control form-control-lg" />
-                            <span asp-validation-for="Username" class="text-danger"></span>
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="auth-card">
+                    <div class="row g-0">
+                        <!-- Banner bên trái -->
+                        <div class="col-lg-6 d-none d-lg-block">
+                            <div class="auth-banner"
+                                 style="background-image: url('/images/auth/login-banner.jpg')">
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label"></label>
-                            <input asp-for="Password" class="form-control form-control-lg" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
+                        <!-- Form bên phải -->
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="auth-title">Đăng nhập</h1>
+                                    <p class="auth-subtitle">Chào mừng bạn trở lại!</p>
+                                </div>
 
-                        <div class="mb-3 form-check">
-                            <input asp-for="RememberMe" class="form-check-input" />
-                            <label asp-for="RememberMe" class="form-check-label"></label>
-                        </div>
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger">
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach (var error in ViewData.ModelState.Values
+                                           .SelectMany(v => v.Errors)
+                                           .Select(e => e.ErrorMessage)
+                                           .Distinct())
+                                            {
+                                                <li><i class="fas fa-exclamation-circle me-2"></i>@error</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-dark btn-lg w-100 mb-3">Đăng nhập</button>
-                        </div>
-                    </form>
+                                <form asp-action="Login" method="post">
+                                    <div class="mb-3">
+                                        <label asp-for="TenDangNhap" class="form-label">
+                                            <i class="fas fa-user me-2"></i>Tên đăng nhập
+                                        </label>
+                                        <div class="input-icon">
+                                            <i class="fas fa-user"></i>
+                                            <input asp-for="TenDangNhap" class="form-control"
+                                                   placeholder="Nhập tên đăng nhập của bạn" />
+                                        </div>
+                                        <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+                                    </div>
 
-                    <div class="text-center mt-4">
-                        <p class="mb-0">
-                            Chưa có tài khoản?
-                            <a asp-action="Register" class="text-dark fw-bold">Đăng ký ngay</a>
-                        </p>
+                                    <div class="mb-4">
+                                        <label asp-for="MatKhau" class="form-label">
+                                            <i class="fas fa-lock me-2"></i>Mật khẩu
+                                        </label>
+                                        <div class="input-icon">
+                                            <i class="fas fa-lock"></i>
+                                            <input asp-for="MatKhau" class="form-control"
+                                                   placeholder="Nhập mật khẩu của bạn" />
+                                        </div>
+                                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="mb-4 form-check">
+                                        <input asp-for="RememberMe" class="form-check-input" />
+                                        <label asp-for="RememberMe" class="form-check-label">
+                                            Ghi nhớ đăng nhập
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn-auth">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                                    </button>
+                                </form>
+
+                                <div class="auth-footer">
+                                    <p>
+                                        <a asp-action="ForgotPassword" class="auth-link">Quên mật khẩu?</a>
+                                    </p>
+                                    <p class="mt-2">
+                                        Chưa có tài khoản?
+                                        <a asp-action="Register" class="auth-link">Đăng ký ngay</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,8 +3,9 @@
     public interface ISessionService
     {
         bool IsLoggedIn();
+        bool IsAdmin();
+        string GetUserToken();
         string GetUserName();
-        void SaveLoginInfo(string token, string userName, string role);
-        void ClearLoginInfo();
+        string GetUserRole();
     }
 }
