@@ -13,26 +13,32 @@
         {
             try
             {
+                // Check nếu request đến area Admin
                 if (context.Request.Path.StartsWithSegments("/Admin"))
                 {
                     var token = context.Session.GetString("JWTToken");
                     var userRole = context.Session.GetString("UserRole");
-
+                    Console.WriteLine($"Path: {context.Request.Path}");
+                    Console.WriteLine($"Token: {token}");
+                    Console.WriteLine($"Role: {userRole}");
+                    // Nếu chưa đăng nhập hoặc không phải Admin
                     if (string.IsNullOrEmpty(token) || userRole != "Admin")
                     {
-                        context.Response.Redirect("/Auth/Login");
-                        return;
+                        // Lưu URL hiện tại để redirect sau khi đăng nhập
+                        var returnUrl = context.Request.Path + context.Request.QueryString;
+                        context.Response.Redirect($"/Auth/Login?returnUrl={returnUrl}");
+                        return; // Dừng pipeline ở đây
                     }
                 }
 
-                if (_next != null)
-                {
-                    await _next(context);
-                }
+                // Nếu xác thực thành công hoặc không phải admin area, tiếp tục pipeline
+                await _next(context);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw;
+                // Log lỗi nếu cần
+                context.Response.Redirect("/Auth/Login");
+                return;
             }
         }
     }

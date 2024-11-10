@@ -1,0 +1,143 @@
+﻿@using DATN_MVC.Models.PhanQuyen
+@model PhanQuyenDetailDTO
+@{
+    ViewData["Title"] = "Role Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Role Details</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Roles</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Role Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Role Name:</dt>
+                            <dd class="col-sm-8">@Model.TenPhanQuyen</dd>
+
+                            <dt class="col-sm-4">User Count:</dt>
+                            <dd class="col-sm-8">@Model.SoLuongTaiKhoan</dd>
+
+                            <dt class="col-sm-4">Created Date:</dt>
+                            <dd class="col-sm-8">@Model.NgayTao.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                            @if (Model.NgayCapNhat.HasValue)
+                            {
+                                <dt class="col-sm-4">Updated Date:</dt>
+                                <dd class="col-sm-8">@Model.NgayCapNhat.Value.ToString("dd/MM/yyyy HH:mm")</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Users List</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var index = 1;
+                                }
+                                @foreach (var item in Model.DanhSachTaiKhoan)
+                                {
+                                    <tr>
+                                        <td class="text-center">@(index++)</td>
+                                        <td>@item.TenDangNhap</td>
+                                        <td>@item.TenKhachHang</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.TrangThai</td>
+                                        <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <a asp-action="Index" class="btn btn-default">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                @if (Model.TenPhanQuyen != "Admin")
+                {
+                    <button onclick="confirmDelete(@Model.Id)" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<form id="deleteForm" asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="deleteId" name="id" />
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "responsive": true,
+                "autoWidth": false
+            });
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#deleteId").val(id);
+                    $("#deleteForm").submit();
+                }
+            });
+        }
+    </script>
+}

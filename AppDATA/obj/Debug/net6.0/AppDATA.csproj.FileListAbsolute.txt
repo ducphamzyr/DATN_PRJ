@@ -1,0 +1,12 @@
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\bin\Debug\net6.0\AppDATA.deps.json
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\bin\Debug\net6.0\AppDATA.dll
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\bin\Debug\net6.0\AppDATA.pdb
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.csproj.AssemblyReference.cache
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.AssemblyInfoInputs.cache
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.AssemblyInfo.cs
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.dll
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\refint\AppDATA.dll
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\AppDATA.pdb
+C:\Users\ADMIN\Downloads\DATN_PRJ-master\DATN_PRJ-master\AppDATA\obj\Debug\net6.0\ref\AppDATA.dll

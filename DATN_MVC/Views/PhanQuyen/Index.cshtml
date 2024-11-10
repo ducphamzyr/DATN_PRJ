@@ -1,0 +1,63 @@
+﻿@using DATN_MVC.Models.PhanQuyen
+@model PhanQuyenDTO
+@{
+    ViewData["Title"] = "Thông tin phân quyền";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (TempData["error"] != null)
+            {
+                <div class="alert alert-danger mb-4">@TempData["error"]</div>
+            }
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Thông tin phân quyền của tôi</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model != null)
+                    {
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Phân quyền:</label>
+                                    <p class="form-control-plaintext">@Model.TenPhanQuyen</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Ngày cấp:</label>
+                                    <p class="form-control-plaintext">
+                                        @Model.NgayTao.ToString("dd/MM/yyyy HH:mm")
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Số lượng tài khoản:</label>
+                                    <p class="form-control-plaintext">@Model.SoLuongTaiKhoan</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Không tìm thấy thông tin phân quyền
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

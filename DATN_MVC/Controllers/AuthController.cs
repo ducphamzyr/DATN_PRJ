@@ -47,8 +47,8 @@ public class AuthController : Controller
             {
                 var loginData = new
                 {
-                    TenDangNhap = model.TenDangNhap,  // Đã đổi từ Username
-                    MatKhau = model.MatKhau           // Đã đổi từ Password
+                    TenDangNhap = model.TenDangNhap,
+                    MatKhau = model.MatKhau     
                 };
 
                 var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
