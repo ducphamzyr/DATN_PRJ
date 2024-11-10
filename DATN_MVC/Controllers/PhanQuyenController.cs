@@ -10,50 +10,75 @@ namespace DATN_MVC.Controllers
         private readonly IPhanQuyenService _phanQuyenService;
         private readonly ILogger<PhanQuyenController> _logger;
 
-        public PhanQuyenController(IPhanQuyenService phanQuyenService,ILogger<PhanQuyenController> logger)
+        public PhanQuyenController(IPhanQuyenService phanQuyenService, ILogger<PhanQuyenController> logger)
         {
             _phanQuyenService = phanQuyenService;
             _logger = logger;
         }
 
+        // GET: PhanQuyen
         public async Task<IActionResult> Index()
         {
             try
             {
                 var token = GetUserToken();
-                _logger.LogInformation($"Token: {token}");
+                _logger.LogInformation("Getting current user role");
+
                 var result = await _phanQuyenService.LayQuyenCuaToiAsync(token);
 
-                if (result.Success)
-                    return View(result.Data);
+                if (!result.Success)
+                {
+                    TempData["error"] = result.Message;
+                    return View(null);
+                }
 
-                TempData["error"] = result.Message;
-                return View(null);
+                // Lấy thông tin chi tiết về quyền
+                if (result.Data != null)
+                {
+                    var detailResult = await _phanQuyenService.GetByIdAsync(result.Data.Id, token);
+                    if (detailResult.Success)
+                    {
+                        return View(detailResult.Data);
+                    }
+                }
+
+                return View(result.Data);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in PhanQuyen Index");
                 TempData["error"] = "Lỗi hệ thống!";
                 return View(null);
             }
         }
 
-        public async Task<IActionResult> DanhSach()
+        // GET: PhanQuyen/Details/5
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
                 var token = GetUserToken();
-                var result = await _phanQuyenService.GetAllAsync(token);
+                var result = await _phanQuyenService.GetByIdAsync(id, token);
 
-                if (result.Success)
-                    return View(result.Data);
+                if (!result.Success)
+                {
+                    TempData["error"] = result.Message;
+                    return RedirectToAction(nameof(Index));
+                }
 
-                TempData["error"] = result.Message;
-                return View(new List<PhanQuyenDTO>());
+                if (result.Data is not PhanQuyenDetailDTO detailDTO)
+                {
+                    TempData["error"] = "Không thể lấy thông tin chi tiết phân quyền";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(detailDTO);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in PhanQuyen Details for ID: {Id}", id);
                 TempData["error"] = "Lỗi hệ thống!";
-                return View(new List<PhanQuyenDTO>());
+                return RedirectToAction(nameof(Index));
             }
         }
     }

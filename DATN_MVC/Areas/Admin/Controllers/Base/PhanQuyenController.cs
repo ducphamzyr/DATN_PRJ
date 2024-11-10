@@ -3,17 +3,18 @@ using DATN_MVC.Areas.Admin.Controllers.Base;
 using DATN_MVC.Services;
 using DATN_MVC.Models.PhanQuyen;
 
-
 namespace DATN_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PhanQuyenController : AdminBaseController
     {
         private readonly IPhanQuyenService _phanQuyenService;
+        private readonly ILogger<PhanQuyenController> _logger;
 
-        public PhanQuyenController(IPhanQuyenService phanQuyenService)
+        public PhanQuyenController(IPhanQuyenService phanQuyenService, ILogger<PhanQuyenController> logger)
         {
             _phanQuyenService = phanQuyenService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -23,42 +24,54 @@ namespace DATN_MVC.Areas.Admin.Controllers
                 var token = GetUserToken();
                 var result = await _phanQuyenService.GetAllAsync(token);
 
-                if (result.Success)
-                    return View(result.Data);
+                if (!result.Success)
+                {
+                    TempData["error"] = result.Message;
+                    return View(new List<PhanQuyenDTO>());
+                }
 
-                TempData["error"] = result.Message;
-                return View(new List<PhanQuyenDTO>());
+                // Get statistics for dashboard
+                var statsResult = await _phanQuyenService.LayThongKeAsync(token);
+                if (statsResult.Success)
+                {
+                    ViewBag.Statistics = statsResult.Data;
+                }
+
+                return View(result.Data);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Index action");
                 TempData["error"] = "System error!";
                 return View(new List<PhanQuyenDTO>());
             }
         }
-        [HttpPost]
-[ValidateAntiForgeryToken]
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             try
             {
                 var token = GetUserToken();
-                // Chắc chắn rằng API trả về PhanQuyenDetailDTO bao gồm DanhSachTaiKhoan
                 var result = await _phanQuyenService.GetByIdAsync(id, token);
 
-                if (result.Success)
+                if (!result.Success)
                 {
-                    if (result.Data is PhanQuyenDetailDTO detailDTO)
-                        return View(detailDTO);
+                    TempData["error"] = result.Message;
+                    return RedirectToAction(nameof(Index));
+                }
 
+                if (result.Data is not PhanQuyenDetailDTO detailDTO)
+                {
                     TempData["error"] = "Invalid data format";
                     return RedirectToAction(nameof(Index));
                 }
 
-                TempData["error"] = result.Message;
-                return RedirectToAction(nameof(Index));
+                return View(detailDTO);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Details action for ID: {Id}", id);
                 TempData["error"] = "System error!";
                 return RedirectToAction(nameof(Index));
             }
@@ -70,6 +83,7 @@ namespace DATN_MVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePhanQuyenDTO model)
         {
             if (!ModelState.IsValid)
@@ -89,8 +103,9 @@ namespace DATN_MVC.Areas.Admin.Controllers
                 TempData["error"] = result.Message;
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Create action");
                 TempData["error"] = "System error!";
                 return View(model);
             }
@@ -103,26 +118,29 @@ namespace DATN_MVC.Areas.Admin.Controllers
                 var token = GetUserToken();
                 var result = await _phanQuyenService.GetByIdAsync(id, token);
 
-                if (result.Success)
+                if (!result.Success)
                 {
-                    var model = new UpdatePhanQuyenDTO
-                    {
-                        TenPhanQuyen = result.Data.TenPhanQuyen
-                    };
-                    return View(model);
+                    TempData["error"] = result.Message;
+                    return RedirectToAction(nameof(Index));
                 }
 
-                TempData["error"] = result.Message;
-                return RedirectToAction(nameof(Index));
+                var model = new UpdatePhanQuyenDTO
+                {
+                    TenPhanQuyen = result.Data.TenPhanQuyen
+                };
+
+                return View(model);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Edit action for ID: {Id}", id);
                 TempData["error"] = "System error!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdatePhanQuyenDTO model)
         {
             if (!ModelState.IsValid)
@@ -142,8 +160,9 @@ namespace DATN_MVC.Areas.Admin.Controllers
                 TempData["error"] = result.Message;
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Edit action for ID: {Id}", id);
                 TempData["error"] = "System error!";
                 return View(model);
             }
@@ -156,6 +175,15 @@ namespace DATN_MVC.Areas.Admin.Controllers
             try
             {
                 var token = GetUserToken();
+
+                // Check if role is Admin
+                var roleResult = await _phanQuyenService.GetByIdAsync(id, token);
+                if (roleResult.Success && roleResult.Data?.TenPhanQuyen == "Admin")
+                {
+                    TempData["error"] = "Cannot delete Admin role!";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 var result = await _phanQuyenService.DeleteAsync(id, token);
 
                 if (result.Success)
@@ -163,8 +191,9 @@ namespace DATN_MVC.Areas.Admin.Controllers
                 else
                     TempData["error"] = result.Message;
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error in Delete action for ID: {Id}", id);
                 TempData["error"] = "System error!";
             }
 

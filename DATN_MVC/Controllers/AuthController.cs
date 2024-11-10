@@ -53,7 +53,6 @@ public class AuthController : Controller
 
                 var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginData);
 
-                // Parse response content
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
 
                 if (result.Success)
@@ -68,7 +67,6 @@ public class AuthController : Controller
                 }
                 else
                 {
-                    // Add API error message to ModelState
                     ModelState.AddModelError("", result.Message);
                 }
             }
@@ -108,7 +106,6 @@ public class AuthController : Controller
 
                 var response = await _httpClient.PostAsJsonAsync("api/auth/register", registerData);
 
-                // Parse response content
                 var result = await response.Content.ReadFromJsonAsync<ApiResponse<LoginResponse>>();
 
                 if (result.Success)
@@ -123,7 +120,6 @@ public class AuthController : Controller
                 }
                 else
                 {
-                    // Add API error message to ModelState
                     ModelState.AddModelError("", result.Message);
                 }
             }

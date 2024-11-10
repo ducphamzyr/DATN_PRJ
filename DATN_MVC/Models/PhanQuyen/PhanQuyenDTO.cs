@@ -7,8 +7,12 @@ namespace DATN_MVC.Models.PhanQuyen
         public int Id { get; set; }
         public string TenPhanQuyen { get; set; }
         public int SoLuongTaiKhoan { get; set; }
-        public DateTime NgayTao { get; set; }
-        public DateTime? NgayCapNhat { get; set; }
+        public DateTime CreatedAt { get; set; }  // Để map với API response
+        public DateTime? UpdatedAt { get; set; }  // Để map với API response
+
+        // Properties để tương thích với code cũ
+        public DateTime NgayTao => CreatedAt;
+        public DateTime? NgayCapNhat => UpdatedAt;
     }
 
     public class CreatePhanQuyenDTO
@@ -24,6 +28,7 @@ namespace DATN_MVC.Models.PhanQuyen
         [StringLength(100, ErrorMessage = "Tên phân quyền không được vượt quá 100 ký tự")]
         public string TenPhanQuyen { get; set; }
     }
+
     public class PhanQuyenDetailDTO : PhanQuyenDTO
     {
         public List<TaiKhoanTrongPhanQuyenDTO> DanhSachTaiKhoan { get; set; }
@@ -32,10 +37,10 @@ namespace DATN_MVC.Models.PhanQuyen
     public class TaiKhoanTrongPhanQuyenDTO
     {
         public int Id { get; set; }
-        public string TenDangNhap { get; set; }
-        public string TenKhachHang { get; set; }
+        public string TenDangNhap { get; set; }  // Map với tenDangNhap từ API
+        public string TenKhachHang { get; set; }  // Map với tenKhachHang từ API
         public string Email { get; set; }
-        public string TrangThai { get; set; }
+        public string TrangThai { get; set; }  // Map với trangThai từ API
         public DateTime CreatedAt { get; set; }
     }
 }

@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Create Role</h1>
+                <h1 class="m-0">Create New Role</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -24,6 +24,16 @@
 
 <section class="content">
     <div class="container-fluid">
+        <!-- Notifications -->
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Error!</h5>
+                @TempData["error"]
+            </div>
+        }
+
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary">
@@ -42,10 +52,10 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Save
+                                <i class="fas fa-save"></i> Create
                             </button>
-                            <a asp-action="Index" class="btn btn-default float-right">
-                                <i class="fas fa-arrow-left"></i> Back
+                            <a asp-action="Index" class="btn btn-secondary float-right">
+                                <i class="fas fa-arrow-left"></i> Back to List
                             </a>
                         </div>
                     </form>
