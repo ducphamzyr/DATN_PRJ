@@ -1,7 +1,7 @@
-﻿@using DATN_MVC.Models;
-@model CreatePhanQuyenDTO
+﻿@using DATN_MVC.Models
+@model CreatePhanLoaiDTO
 @{
-    ViewData["Title"] = "Create Role";
+    ViewData["Title"] = "Create Category";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,12 +9,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Create New Role</h1>
+                <h1 class="m-0">Create New Category</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
-                    <li class="breadcrumb-item"><a asp-action="Index">Roles</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Categories</a></li>
                     <li class="breadcrumb-item active">Create</li>
                 </ol>
             </div>
@@ -38,16 +38,16 @@
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Role Information</h3>
+                        <h3 class="card-title">Category Information</h3>
                     </div>
                     <form asp-action="Create" method="post">
                         <div class="card-body">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="form-group">
-                                <label asp-for="TenPhanQuyen">Role Name</label>
-                                <input asp-for="TenPhanQuyen" class="form-control" placeholder="Enter role name">
-                                <span asp-validation-for="TenPhanQuyen" class="text-danger"></span>
+                                <label asp-for="TenPhanLoai">Category Name</label>
+                                <input asp-for="TenPhanLoai" class="form-control" placeholder="Enter category name">
+                                <span asp-validation-for="TenPhanLoai" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="card-footer">

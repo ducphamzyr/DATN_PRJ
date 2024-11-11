@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\AppDATA\\AppDATA.csproj": {}
+    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\AppDATA\\AppDATA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\AppDATA\\AppDATA.csproj": {
+    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\AppDATA\\AppDATA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\AppDATA\\AppDATA.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\AppDATA\\AppDATA.csproj",
         "projectName": "AppDATA",
-        "projectPath": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\AppDATA\\AppDATA.csproj",
+        "projectPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\AppDATA\\AppDATA.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\AppDATA\\obj\\",
+        "outputPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\AppDATA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

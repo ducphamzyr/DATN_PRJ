@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\DATN_MVC.csproj": {}
+    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\DATN_MVC\\DATN_MVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\DATN_MVC.csproj": {
+    "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\DATN_MVC\\DATN_MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\DATN_MVC.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\DATN_MVC\\DATN_MVC.csproj",
         "projectName": "DATN_MVC",
-        "projectPath": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\DATN_MVC.csproj",
+        "projectPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\DATN_MVC\\DATN_MVC.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Downloads\\DATN_PRJ-master\\DATN_PRJ-master\\DATN_MVC\\obj\\",
+        "outputPath": "C:\\Users\\ADMIN\\OneDrive\\Desktop\\Learn\\CSharpProject\\DATN_PRJ\\DATN_MVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

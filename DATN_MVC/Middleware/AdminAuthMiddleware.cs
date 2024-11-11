@@ -18,9 +18,9 @@
                 {
                     var token = context.Session.GetString("JWTToken");
                     var userRole = context.Session.GetString("UserRole");
-                    Console.WriteLine($"Path: {context.Request.Path}");
-                    Console.WriteLine($"Token: {token}");
-                    Console.WriteLine($"Role: {userRole}");
+                    Console.WriteLine($"Middleware Debug Path: {context.Request.Path}");
+                    Console.WriteLine($"Middleware Debug Token: {token}");
+                    Console.WriteLine($"Middleware Debug Role: {userRole}");
                     // Nếu chưa đăng nhập hoặc không phải Admin
                     if (string.IsNullOrEmpty(token) || userRole != "Admin")
                     {

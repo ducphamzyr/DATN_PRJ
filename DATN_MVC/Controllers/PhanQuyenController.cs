@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DATN_MVC.Controllers.Base;
 using DATN_MVC.Services;
-using DATN_MVC.Models.PhanQuyen;
+using DATN_MVC.Models;
 
 namespace DATN_MVC.Controllers
 {

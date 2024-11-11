@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using DATN_MVC.Models;
-using DATN_MVC.Models.PhanQuyen;
 
 namespace DATN_MVC.Services
 {

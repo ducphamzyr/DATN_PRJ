@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DATN_MVC.Models.PhanQuyen
+namespace DATN_MVC.Models
 {
     public class PhanQuyenDTO
     {
