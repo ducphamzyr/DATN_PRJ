@@ -8,6 +8,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<IPhanQuyenService, PhanQuyenService>();
+builder.Services.AddScoped<IPhuongThucThanhToanService, PhuongThucThanhToanService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>
 {
